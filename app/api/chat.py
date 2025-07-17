@@ -42,7 +42,7 @@ db:Session=Depends(get_db)
             db.add(db_message)
             db.commit()
             db.refresh(db_message)
-             broadcast_message = {
+            broadcast_message = {
                 "sender_role": db_message.sender_role,
                 "content": db_message.content,
                 "timestamp": db_message.timestamp.isoformat()
