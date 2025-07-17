@@ -4,8 +4,20 @@ from typing import Optional,List
 from enum import Enum
 from datetime import datetime
 from uuid import UUID
+class ErrorDetail(BaseModel):
+    
+    line: Optional[int]=None
+    column: Optional[int]=None
+    message: Optional[str]="An Error Occurred"
 
-
+class ErrorResponse(BaseModel):
+    code: int
+    details: List[ErrorDetail]
+class StandardResponse(BaseModel):
+    status:str
+    message:str
+    data:Optional[Any]=None
+    error:Optional[ErrorResponse]=None
 class UserRole(str,Enum):
     client="client"
     fundi="fundi"
