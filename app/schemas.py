@@ -41,6 +41,9 @@ class UserOut(BaseModel):
     profile_picture:Optional[str]=None
     class config:
         from_attribute=True
+class UserLogin(BaseModel):
+    email:EmailStr
+    password:str
 class FundiProfileBase(BaseModel):
     daily_rate:float
     availability:Optional[str]=None
@@ -107,6 +110,9 @@ class RatingResponse(RatingBase):
 
     class Config:
         from_attribute = True
+class DeviceTokenResponse(BaseModel):
+    token:str
+    
 
 
 
