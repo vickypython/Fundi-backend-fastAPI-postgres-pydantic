@@ -95,3 +95,8 @@ class Rating(Base):
 
     rater = relationship("User", back_populates="ratings_given")
     fundi = relationship("FundiProfile", back_populates="ratings")
+class DeviceToken(Base):
+    __tablename__="token_table"
+    id=Column(UUID(as_uuid=True),primary_key=True)
+    user_id=Column(Integer,ForeignKey("users.id"))
+    token=Column(String,nullable=False,unique=True)
