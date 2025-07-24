@@ -95,4 +95,31 @@ def log_out(token_clear:DeviceTokenResponse,db:Session=Depends(get_db)):
             "refresh_token":None
 
         })
+class Order(BaseModel):
+    customer_name:str
+    quantity:int
+    clothes_type:str
+
+@router.post("/orders")
+def send_orders(orders:Order):
+    order_bulk=[]
+    for order in orders:
+        order_bulk.append(order)
+    return f"Message:orders saved successfully for this orders:{order_bulk}"
+@router.post("/orders/partial")
+def partial_order(orders:List[Order],db:Session=Depends(get_db)):
+    results={'success':[],"failed":[]}
+    for order in orders:
+        try:
+            if order.quantity<=0:
+                return f"please input a order"
+            new_order=Order(**order.Dict())
+            db.add(new_order)
+            db.commit()
+            db.refresh(new_order)
+            return results["success"].append(new_order.id)
+        except error as e:
+            db.rollback()
+            return results["failed"].append(new_order.id)
+
     
